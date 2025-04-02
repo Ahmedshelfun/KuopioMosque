@@ -20,16 +20,16 @@ export default function Header() {
       <div className="bg-primary text-white py-2">
         <div className="container mx-auto px-4 flex justify-between items-center">
           <div className="flex items-center space-x-4">
-            <a href="tel:+358501234567" className="text-sm flex items-center">
+            <a href="tel:+358405455805" className="text-sm flex items-center">
               <i className="fas fa-phone mr-2"></i>
-              <span>+358 50 123 4567</span>
+              <span>+358 40 545 5805</span>
             </a>
             <a
-              href="mailto:info@kuopiomosque.fi"
+              href="mailto:kuopioic@gmail.com"
               className="text-sm hidden sm:flex items-center"
             >
               <i className="fas fa-envelope mr-2"></i>
-              <span>info@kuopiomosque.fi</span>
+              <span>kuopioic@gmail.com</span>
             </a>
           </div>
 
