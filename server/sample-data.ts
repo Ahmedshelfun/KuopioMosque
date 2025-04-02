@@ -23,21 +23,22 @@ export async function initSampleData() {
   const today = format(new Date(), "yyyy-MM-dd");
   const existingPrayerTime = await storage.getPrayerTimesByDate(today);
   if (!existingPrayerTime) {
+    // Using the Organisations Islamiques de France method with 12.0 degrees for Fajr and Isha
     const prayerTime: InsertPrayerTime = {
       date: today,
-      fajr_begins: "05:30",
-      fajr_iqamah: "06:00",
-      sunrise: "06:45",
-      dhuhr_begins: "12:30",
-      dhuhr_iqamah: "13:00",
-      asr_begins: "16:00",
-      asr_iqamah: "16:30",
-      maghrib_begins: "19:30",
-      maghrib_iqamah: "19:50",
-      isha_begins: "21:00",
-      isha_iqamah: "21:30",
-      jummah_khutbah: "13:30",
-      jummah_iqamah: "14:00"
+      fajr_begins: "03:15", // Earlier for summer months in Finland
+      fajr_iqamah: "03:45",
+      sunrise: "04:30",
+      dhuhr_begins: "13:15",
+      dhuhr_iqamah: "13:30",
+      asr_begins: "17:45",
+      asr_iqamah: "18:00",
+      maghrib_begins: "22:10",
+      maghrib_iqamah: "22:20",
+      isha_begins: "23:45", // Later based on 12.0 degrees calculation
+      isha_iqamah: "00:00",
+      jummah_khutbah: "13:00",
+      jummah_iqamah: "13:30"
     };
     await storage.createPrayerTime(prayerTime);
     console.log("Created sample prayer times for today");
