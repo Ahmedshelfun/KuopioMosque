@@ -1,181 +1,213 @@
-import { Home } from "lucide-react";
+import { Home, MapPin, Phone, Mail, Clock, Facebook, Twitter, Instagram, Youtube } from "lucide-react";
+import { motion } from "framer-motion";
 import { useLanguage } from "@/hooks/useLanguage";
 import { getDirection } from "@/lib/i18n";
+import { useAnimationInView, staggerChildren, slideUp } from "@/hooks/useAnimations";
 
 export default function Footer() {
   const { language, t } = useLanguage();
   const dir = getDirection(language);
   const currentYear = new Date().getFullYear();
+  const animation = useAnimationInView();
 
   return (
-    <footer className="bg-primary-dark text-white pt-12 pb-6" dir={dir}>
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-          <div>
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center">
+    <motion.footer 
+      ref={animation.ref}
+      initial="hidden"
+      animate={animation.animate}
+      variants={staggerChildren}
+      className="bg-primary text-white pt-12 pb-6" 
+      dir={dir}
+    >
+      <div className="container mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+          {/* Column 1: About */}
+          <motion.div variants={slideUp}>
+            <div className="flex items-center gap-3 mb-4 group">
+              <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center transition-all group-hover:shadow-lg">
                 <Home className="text-primary text-lg" />
               </div>
               <div>
                 <h4 className="text-lg font-bold">Kuopio Mosque</h4>
-                <p className="text-xs opacity-75">Islamic Center of Kuopio</p>
+                <p className="text-xs text-white/75">Islamic Center of Kuopio</p>
               </div>
             </div>
-            <p className="text-sm opacity-75 mb-4">
+            <p className="text-sm text-white/75 mb-6 leading-relaxed">
               A place of worship, learning, and community gathering in Kuopio, Finland.
             </p>
-            <div className="flex space-x-3">
-              <a href="#" className="text-white opacity-75 hover:opacity-100">
-                <i className="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" className="text-white opacity-75 hover:opacity-100">
-                <i className="fab fa-twitter"></i>
-              </a>
-              <a href="#" className="text-white opacity-75 hover:opacity-100">
-                <i className="fab fa-instagram"></i>
-              </a>
-              <a href="#" className="text-white opacity-75 hover:opacity-100">
-                <i className="fab fa-youtube"></i>
-              </a>
+            <div className="flex gap-4">
+              <SocialLink icon={<Facebook size={18} />} />
+              <SocialLink icon={<Twitter size={18} />} />
+              <SocialLink icon={<Instagram size={18} />} />
+              <SocialLink icon={<Youtube size={18} />} />
             </div>
-          </div>
+          </motion.div>
 
-          <div>
-            <h4 className="text-lg font-bold mb-4">{t("nav.home")}</h4>
-            <ul className="space-y-2">
-              <li>
-                <a href="#home" className="text-sm opacity-75 hover:opacity-100">
-                  {t("nav.home")}
-                </a>
-              </li>
-              <li>
-                <a href="#prayer-times" className="text-sm opacity-75 hover:opacity-100">
-                  {t("nav.prayer_times")}
-                </a>
-              </li>
-              <li>
-                <a href="#about" className="text-sm opacity-75 hover:opacity-100">
-                  {t("nav.about")}
-                </a>
-              </li>
-              <li>
-                <a href="#services" className="text-sm opacity-75 hover:opacity-100">
-                  {t("about.services")}
-                </a>
-              </li>
-              <li>
-                <a href="#events" className="text-sm opacity-75 hover:opacity-100">
-                  {t("nav.events")}
-                </a>
-              </li>
-              <li>
-                <a href="#news" className="text-sm opacity-75 hover:opacity-100">
-                  {t("nav.news")}
-                </a>
-              </li>
-              <li>
-                <a href="#donate" className="text-sm opacity-75 hover:opacity-100">
-                  {t("nav.donate")}
-                </a>
-              </li>
-              <li>
-                <a href="#contact" className="text-sm opacity-75 hover:opacity-100">
-                  {t("nav.contact")}
-                </a>
-              </li>
+          {/* Column 2: Navigation Links */}
+          <motion.div variants={slideUp} className="mt-6 sm:mt-0">
+            <h4 className="text-lg font-bold mb-4 relative inline-block">
+              {t("nav.home")}
+              <motion.div
+                className="absolute -bottom-1 left-0 h-0.5 bg-white/40 w-full"
+                layoutId="footer-title-underline-1"
+              />
+            </h4>
+            <ul className="grid grid-cols-1 gap-2">
+              <FooterLink href="#home" label={t("nav.home")} />
+              <FooterLink href="#prayer-times" label={t("nav.prayer_times")} />
+              <FooterLink href="#about" label={t("nav.about")} />
+              <FooterLink href="#services" label={t("about.services")} />
+              <FooterLink href="#events" label={t("nav.events")} />
+              <FooterLink href="#news" label={t("nav.news")} />
+              <FooterLink href="#donate" label={t("nav.donate")} />
+              <FooterLink href="#contact" label={t("nav.contact")} />
             </ul>
-          </div>
+          </motion.div>
 
-          <div>
-            <h4 className="text-lg font-bold mb-4">{t("about.services")}</h4>
-            <ul className="space-y-2">
-              <li>
-                <a href="#" className="text-sm opacity-75 hover:opacity-100">
-                  {t("service.prayers")}
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-sm opacity-75 hover:opacity-100">
-                  Friday Prayer
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-sm opacity-75 hover:opacity-100">
-                  {t("service.quran")}
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-sm opacity-75 hover:opacity-100">
-                  {t("service.education")}
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-sm opacity-75 hover:opacity-100">
-                  Marriage Services
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-sm opacity-75 hover:opacity-100">
-                  Funeral Services
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-sm opacity-75 hover:opacity-100">
-                  Counseling
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-sm opacity-75 hover:opacity-100">
-                  {t("service.support")}
-                </a>
-              </li>
+          {/* Column 3: Services */}
+          <motion.div variants={slideUp} className="mt-6 lg:mt-0">
+            <h4 className="text-lg font-bold mb-4 relative inline-block">
+              {t("about.services")}
+              <motion.div
+                className="absolute -bottom-1 left-0 h-0.5 bg-white/40 w-full"
+                layoutId="footer-title-underline-2"
+              />
+            </h4>
+            <ul className="grid grid-cols-1 gap-2">
+              <FooterLink href="#" label={t("service.prayers")} />
+              <FooterLink href="#" label="Friday Prayer" />
+              <FooterLink href="#" label={t("service.quran")} />
+              <FooterLink href="#" label={t("service.education")} />
+              <FooterLink href="#" label="Marriage Services" />
+              <FooterLink href="#" label="Funeral Services" />
+              <FooterLink href="#" label="Counseling" />
+              <FooterLink href="#" label={t("service.support")} />
             </ul>
-          </div>
+          </motion.div>
 
-          <div>
-            <h4 className="text-lg font-bold mb-4">{t("contact.title")}</h4>
-            <ul className="space-y-3">
-              <li className="flex items-start">
-                <i className="fas fa-map-marker-alt mt-1 mr-3 opacity-75"></i>
-                <span className="text-sm opacity-75">
-                  Petosenmutka
-                  <br />
-                  70820 Kuopio, Finland
-                </span>
-              </li>
-              <li className="flex items-center">
-                <i className="fas fa-phone-alt mr-3 opacity-75"></i>
-                <span className="text-sm opacity-75">+358 40 545 5805</span>
-              </li>
-              <li className="flex items-center">
-                <i className="fas fa-envelope mr-3 opacity-75"></i>
-                <span className="text-sm opacity-75">kuopioic@gmail.com</span>
-              </li>
-              <li className="flex items-center">
-                <i className="fas fa-clock mr-3 opacity-75"></i>
-                <span className="text-sm opacity-75">Office: Mon-Fri, 10AM-6PM</span>
-              </li>
+          {/* Column 4: Contact Information */}
+          <motion.div variants={slideUp} className="mt-6 lg:mt-0">
+            <h4 className="text-lg font-bold mb-4 relative inline-block">
+              {t("contact.title")}
+              <motion.div
+                className="absolute -bottom-1 left-0 h-0.5 bg-white/40 w-full"
+                layoutId="footer-title-underline-3"
+              />
+            </h4>
+            <ul className="flex flex-col gap-4">
+              <ContactItem 
+                icon={<MapPin size={16} />} 
+                content={
+                  <span>
+                    Petosenmutka
+                    <br />
+                    70820 Kuopio, Finland
+                  </span>
+                }
+              />
+              <ContactItem 
+                icon={<Phone size={16} />} 
+                content="+358 40 545 5805"
+                href="tel:+358405455805"
+              />
+              <ContactItem 
+                icon={<Mail size={16} />} 
+                content="kuopioic@gmail.com"
+                href="mailto:kuopioic@gmail.com"
+              />
+              <ContactItem 
+                icon={<Clock size={16} />} 
+                content="Office: Mon-Fri, 10AM-6PM"
+              />
             </ul>
-          </div>
+          </motion.div>
         </div>
 
-        <div className="border-t border-white border-opacity-20 pt-6 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-sm opacity-75 mb-4 md:mb-0">
+        {/* Footer Bottom */}
+        <motion.div 
+          variants={slideUp}
+          className="border-t border-white/20 pt-6 flex flex-col md:flex-row justify-between items-center"
+        >
+          <p className="text-sm text-white/75 mb-4 md:mb-0 text-center md:text-left">
             &copy; {currentYear} Kuopio Islamic Center. {t("footer.rights")}
           </p>
-          <div className="flex space-x-4">
-            <a href="#" className="text-sm opacity-75 hover:opacity-100">
+          <div className="flex gap-6">
+            <a href="#" className="text-sm text-white/75 hover:text-white transition-colors">
               {t("footer.privacy")}
             </a>
-            <a href="#" className="text-sm opacity-75 hover:opacity-100">
+            <a href="#" className="text-sm text-white/75 hover:text-white transition-colors">
               {t("footer.terms")}
             </a>
-            <a href="#" className="text-sm opacity-75 hover:opacity-100">
+            <a href="#" className="text-sm text-white/75 hover:text-white transition-colors">
               {t("footer.sitemap")}
             </a>
           </div>
-        </div>
+        </motion.div>
       </div>
-    </footer>
+    </motion.footer>
+  );
+}
+
+// Helper component for footer links
+function FooterLink({ href, label }: { href: string; label: string }) {
+  return (
+    <li>
+      <motion.a 
+        href={href} 
+        className="text-sm text-white/75 hover:text-white transition-colors inline-block py-1"
+        whileHover={{ x: 5 }}
+        transition={{ type: "spring", stiffness: 400, damping: 10 }}
+      >
+        {label}
+      </motion.a>
+    </li>
+  );
+}
+
+// Helper component for contact items
+function ContactItem({ 
+  icon, 
+  content,
+  href
+}: { 
+  icon: React.ReactNode; 
+  content: React.ReactNode;
+  href?: string;
+}) {
+  const innerContent = (
+    <div className="flex items-start gap-3">
+      <div className="text-white/60 mt-0.5">{icon}</div>
+      <span className="text-sm text-white/75">{content}</span>
+    </div>
+  );
+
+  if (href) {
+    return (
+      <li>
+        <motion.a 
+          href={href}
+          className="hover:text-white transition-colors"
+          whileHover={{ x: 3 }}
+        >
+          {innerContent}
+        </motion.a>
+      </li>
+    );
+  }
+
+  return <li>{innerContent}</li>;
+}
+
+// Helper component for social links
+function SocialLink({ icon }: { icon: React.ReactNode }) {
+  return (
+    <motion.a 
+      href="#" 
+      className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white/75 hover:text-white hover:bg-white/20 transition-all"
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      {icon}
+    </motion.a>
   );
 }
