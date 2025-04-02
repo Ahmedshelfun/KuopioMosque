@@ -11,8 +11,11 @@ import {
   InsertContactMessage,
 } from "@shared/schema";
 
+// Import PgStorage implementation
+import { PgStorage } from "./pg-storage";
+
 export interface IStorage {
-  // User methods (from template)
+  // User methods
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
@@ -72,6 +75,7 @@ export class MemStorage implements IStorage {
         description: "Join us for the Eid al-Adha prayer and celebration. The event includes prayer service, a community feast, activities for children, and distribution of meat to the community.",
         date: "July 28, 2023",
         time_range: "9:00 AM - 2:00 PM",
+        location: "Kuopio Islamic Center",
         type: "Featured",
         is_featured: true,
         image_url: "https://images.unsplash.com/photo-1604594849809-dfedbc827105?auto=format&fit=crop&w=600&q=80",
@@ -81,6 +85,7 @@ export class MemStorage implements IStorage {
         description: "Weekly gathering to study and discuss Quranic verses and their meanings in today's context.",
         date: "Every Wednesday",
         time_range: "6:30 PM - 8:00 PM",
+        location: "Kuopio Islamic Center",
         type: "Weekly",
         is_featured: false,
       },
@@ -89,6 +94,7 @@ export class MemStorage implements IStorage {
         description: "Free Finnish language classes for community members. All levels welcome.",
         date: "July 18, 2023",
         time_range: "5:00 PM - 6:30 PM",
+        location: "Kuopio Islamic Center",
         type: "Bi-weekly",
         is_featured: false,
       },
@@ -97,6 +103,7 @@ export class MemStorage implements IStorage {
         description: "Sports activities for children and teenagers at the local park. Football, volleyball, and more.",
         date: "July 23, 2023",
         time_range: "10:00 AM - 3:00 PM",
+        location: "City Park",
         type: "Special",
         is_featured: false,
       },
@@ -105,6 +112,7 @@ export class MemStorage implements IStorage {
         description: "Monthly community dinner featuring dishes from various Muslim cultures.",
         date: "July 30, 2023",
         time_range: "6:00 PM - 8:30 PM",
+        location: "Kuopio Islamic Center",
         type: "Monthly",
         is_featured: false,
       },
@@ -118,20 +126,20 @@ export class MemStorage implements IStorage {
       {
         title: "Eid Prayer Announcement",
         content: "Eid al-Adha prayer will be held at the mosque on July 28, 2023, at 9:00 AM. Please arrive early as we expect a large attendance.",
-        date: "July 10, 2023",
         image_url: "https://images.unsplash.com/photo-1621352404112-58e2468993a0?auto=format&fit=crop&w=600&q=80",
+        author: "Imam Ahmed",
       },
       {
         title: "Mosque Renovation Update",
         content: "The renovation of the prayer hall will be completed by mid-August. Thank you for your patience and continued support.",
-        date: "July 5, 2023",
         image_url: "https://images.unsplash.com/photo-1606766125414-73cf89d8bbf2?auto=format&fit=crop&w=600&q=80",
+        author: "Construction Committee",
       },
       {
         title: "Donation Goal Reached",
         content: "Thanks to your generosity, we have reached our fundraising goal for the new children's education center. Construction will begin next month.",
-        date: "June 28, 2023",
         image_url: "https://images.unsplash.com/photo-1577896851887-663e75df029d?auto=format&fit=crop&w=600&q=80",
+        author: "Fundraising Committee",
       },
     ];
     
@@ -153,7 +161,8 @@ export class MemStorage implements IStorage {
       maghrib_iqamah: "22:20",
       isha_begins: "23:45",
       isha_iqamah: "00:00",
-      next_prayer_name: "Isha",
+      jummah_khutbah: "13:15",
+      jummah_iqamah: "13:30",
     };
     
     this.createPrayerTime(prayerTime);
@@ -207,7 +216,7 @@ export class MemStorage implements IStorage {
   
   async createEvent(event: InsertEvent): Promise<Event> {
     const id = this.currentEventId++;
-    const created_at = new Date().toISOString();
+    const created_at = new Date();
     const newEvent: Event = { ...event, id, created_at };
     this.events.set(id, newEvent);
     return newEvent;
@@ -225,7 +234,7 @@ export class MemStorage implements IStorage {
   
   async createNewsItem(news: InsertNews): Promise<News> {
     const id = this.currentNewsId++;
-    const created_at = new Date().toISOString();
+    const created_at = new Date();
     const newNews: News = { ...news, id, created_at };
     this.newsItems.set(id, newNews);
     return newNews;
@@ -234,11 +243,12 @@ export class MemStorage implements IStorage {
   // Contact methods
   async createContactMessage(message: InsertContactMessage): Promise<ContactMessage> {
     const id = this.currentContactId++;
-    const created_at = new Date().toISOString();
+    const created_at = new Date();
     const newMessage: ContactMessage = { ...message, id, created_at };
     this.contactMessages.set(id, newMessage);
     return newMessage;
   }
 }
 
-export const storage = new MemStorage();
+// Initialize storage with PostgreSQL implementation
+export const storage = new PgStorage();

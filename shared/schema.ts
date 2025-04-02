@@ -2,16 +2,18 @@ import { pgTable, text, serial, timestamp, date, varchar, boolean } from "drizzl
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-// User schema (from template)
+// User schema
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   username: text("username").notNull().unique(),
   password: text("password").notNull(),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  role: text("role").default("user"),
 });
 
-export const insertUserSchema = createInsertSchema(users).pick({
-  username: true,
-  password: true,
+export const insertUserSchema = createInsertSchema(users).omit({
+  id: true,
 });
 
 // Prayer Times schema
@@ -29,6 +31,8 @@ export const prayerTimes = pgTable("prayer_times", {
   maghrib_iqamah: varchar("maghrib_iqamah", { length: 5 }),
   isha_begins: varchar("isha_begins", { length: 5 }).notNull(),
   isha_iqamah: varchar("isha_iqamah", { length: 5 }),
+  jummah_khutbah: varchar("jummah_khutbah", { length: 5 }),
+  jummah_iqamah: varchar("jummah_iqamah", { length: 5 }),
   next_prayer_name: varchar("next_prayer_name", { length: 10 }),
 });
 
@@ -43,6 +47,7 @@ export const events = pgTable("events", {
   description: text("description").notNull(),
   date: text("date").notNull(),
   time_range: text("time_range").notNull(),
+  location: text("location").notNull(),
   type: text("type").notNull(),
   is_featured: boolean("is_featured").default(false),
   image_url: text("image_url"),
@@ -59,8 +64,8 @@ export const news = pgTable("news", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
   content: text("content").notNull(),
-  date: text("date").notNull(),
   image_url: text("image_url").notNull(),
+  author: text("author").notNull(),
   created_at: timestamp("created_at").defaultNow(),
 });
 

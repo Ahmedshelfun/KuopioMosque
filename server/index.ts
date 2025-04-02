@@ -1,6 +1,11 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import { migrate } from "drizzle-orm/node-postgres/migrator";
+import { db } from "./db";
+import { PgStorage } from "./pg-storage";
+import { storage } from "./storage";
+import { initSampleData } from "./sample-data";
 
 const app = express();
 app.use(express.json());
@@ -37,6 +42,28 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  try {
+    // Set up the database
+    // In production, we would use proper migrations with drizzle-kit
+    // For this project, we'll use schema push to create tables automatically
+    try {
+      await migrate(db, { migrationsFolder: "./migrations" });
+      log("Database migrations applied successfully");
+    } catch (error) {
+      console.error("Error applying migrations:", error);
+      // Continue execution - tables might already exist
+    }
+
+    // Override the default storage with PostgreSQL implementation
+    // We don't need to reassign storage as it's already initialized as PgStorage in storage.ts
+    
+    // Initialize sample data (will only add if data doesn't exist)
+    await initSampleData();
+    log("Sample data initialized successfully");
+  } catch (error) {
+    console.error("Error setting up database:", error);
+  }
+
   const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
