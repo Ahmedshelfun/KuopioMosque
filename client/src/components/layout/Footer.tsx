@@ -138,18 +138,18 @@ export default function Footer() {
               <li className="flex items-start">
                 <i className="fas fa-map-marker-alt mt-1 mr-3 opacity-75"></i>
                 <span className="text-sm opacity-75">
-                  123 Example Street
+                  Petosenmutka
                   <br />
-                  70100 Kuopio, Finland
+                  70820 Kuopio, Finland
                 </span>
               </li>
               <li className="flex items-center">
                 <i className="fas fa-phone-alt mr-3 opacity-75"></i>
-                <span className="text-sm opacity-75">+358 50 123 4567</span>
+                <span className="text-sm opacity-75">+358 40 545 5805</span>
               </li>
               <li className="flex items-center">
                 <i className="fas fa-envelope mr-3 opacity-75"></i>
-                <span className="text-sm opacity-75">info@kuopiomosque.fi</span>
+                <span className="text-sm opacity-75">kuopioic@gmail.com</span>
               </li>
               <li className="flex items-center">
                 <i className="fas fa-clock mr-3 opacity-75"></i>

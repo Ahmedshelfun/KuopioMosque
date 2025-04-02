@@ -97,7 +97,7 @@ export default function ContactSection() {
             {/* Map */}
             <div className="bg-white p-1 rounded-lg shadow-md mb-6">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14655.073546613684!2d27.6594664!3d62.8924767!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4684b0eecb4aaa23%3A0xff38aee1d6b21818!2sKuopio%2C%20Finland!5e0!3m2!1sen!2sus!4v1690000000000!5m2!1sen!2sus"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1857.9083882369456!2d27.61209347700045!3d62.867583392773726!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4684b7f1a72ac4cd%3A0xaea7da7c69c4aee5!2sPetosenmutka%2C%2070820%20Kuopio%2C%20Finland!5e0!3m2!1sen!2sus!4v1712067026563!5m2!1sen!2sus"
                 width="100%"
                 height="250"
                 style={{ border: 0 }}
@@ -119,9 +119,9 @@ export default function ContactSection() {
                   <p className="text-neutral-darkest">
                     Kuopio Islamic Center
                     <br />
-                    123 Example Street
+                    Petosenmutka
                     <br />
-                    70100 Kuopio, Finland
+                    70820 Kuopio, Finland
                   </p>
                 </div>
               </div>
@@ -132,7 +132,7 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <h4 className="font-bold mb-1">{t("contact.phone")}</h4>
-                  <p className="text-neutral-darkest">+358 50 123 4567</p>
+                  <p className="text-neutral-darkest">+358 40 545 5805</p>
                 </div>
               </div>
 
@@ -142,7 +142,7 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <h4 className="font-bold mb-1">{t("contact.email")}</h4>
-                  <p className="text-neutral-darkest">info@kuopiomosque.fi</p>
+                  <p className="text-neutral-darkest">kuopioic@gmail.com</p>
                 </div>
               </div>
 
