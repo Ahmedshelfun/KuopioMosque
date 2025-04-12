@@ -11,8 +11,26 @@ import {
   InsertContactMessage,
 } from "@shared/schema";
 
-// Import PgStorage implementation
-import { PgStorage } from "./pg-storage";
+import {
+  Product,
+  InsertProduct,
+  Category,
+  InsertCategory,
+  Brand,
+  InsertBrand,
+  Review,
+  InsertReview,
+  Order,
+  InsertOrder,
+  OrderItem,
+  InsertOrderItem
+} from "@shared/commerce-schema";
+
+import fs from 'fs';
+import path from 'path';
+
+// Remove the import for PgStorage
+// import { PgStorage } from "./pg-storage";
 
 export interface IStorage {
   // User methods
@@ -37,6 +55,34 @@ export interface IStorage {
   
   // Contact methods
   createContactMessage(message: InsertContactMessage): Promise<ContactMessage>;
+  
+  // Commerce methods
+  getProducts(): Promise<Product[]>;
+  getProduct(id: number): Promise<Product | undefined>;
+  getFeaturedProducts(): Promise<Product[]>;
+  getNewProducts(): Promise<Product[]>;
+  getProductsByCategory(categoryId: number): Promise<Product[]>;
+  getProductsByBrand(brandId: number): Promise<Product[]>;
+  createProduct(product: InsertProduct): Promise<Product>;
+  
+  getCategories(): Promise<Category[]>;
+  getCategory(id: number): Promise<Category | undefined>;
+  createCategory(category: InsertCategory): Promise<Category>;
+  
+  getBrands(): Promise<Brand[]>;
+  getFeaturedBrands(): Promise<Brand[]>;
+  getBrand(id: number): Promise<Brand | undefined>;
+  createBrand(brand: InsertBrand): Promise<Brand>;
+  
+  getReviews(productId: number): Promise<Review[]>;
+  createReview(review: InsertReview): Promise<Review>;
+  
+  getOrders(userId: number): Promise<Order[]>;
+  getOrder(id: number): Promise<Order | undefined>;
+  createOrder(order: InsertOrder): Promise<Order>;
+  
+  getOrderItems(orderId: number): Promise<OrderItem[]>;
+  createOrderItem(orderItem: InsertOrderItem): Promise<OrderItem>;
 }
 
 export class MemStorage implements IStorage {
@@ -46,10 +92,24 @@ export class MemStorage implements IStorage {
   private newsItems: Map<number, News>;
   private contactMessages: Map<number, ContactMessage>;
   
+  // Commerce maps
+  private products: Map<number, Product>;
+  private categories: Map<number, Category>;
+  private brands: Map<number, Brand>;
+  private reviews: Map<number, Review>;
+  private orders: Map<number, Order>;
+  private orderItems: Map<number, OrderItem>;
+  
   private currentUserId: number;
   private currentEventId: number;
   private currentNewsId: number;
   private currentContactId: number;
+  private currentProductId: number;
+  private currentCategoryId: number;
+  private currentBrandId: number;
+  private currentReviewId: number;
+  private currentOrderId: number;
+  private currentOrderItemId: number;
 
   constructor() {
     this.users = new Map();
@@ -58,16 +118,96 @@ export class MemStorage implements IStorage {
     this.newsItems = new Map();
     this.contactMessages = new Map();
     
+    // Initialize commerce maps
+    this.products = new Map();
+    this.categories = new Map();
+    this.brands = new Map();
+    this.reviews = new Map();
+    this.orders = new Map();
+    this.orderItems = new Map();
+    
     this.currentUserId = 1;
     this.currentEventId = 1;
     this.currentNewsId = 1;
     this.currentContactId = 1;
+    this.currentProductId = 1;
+    this.currentCategoryId = 1;
+    this.currentBrandId = 1;
+    this.currentReviewId = 1;
+    this.currentOrderId = 1;
+    this.currentOrderItemId = 1;
     
     // Initialize with sample data
     this.initSampleData();
   }
 
   private initSampleData() {
+    try {
+      // Load eCommerce data from JSON file
+      const productsData = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'server/data/products.json'), 'utf8'));
+      
+      // Import brands
+      if (productsData.brands && Array.isArray(productsData.brands)) {
+        productsData.brands.forEach((brand: any) => {
+          const brandObj: InsertBrand = {
+            name: brand.name,
+            name_ar: brand.name_ar,
+            description: brand.description,
+            description_ar: brand.description_ar,
+            logoUrl: brand.logoUrl,
+            websiteUrl: brand.websiteUrl,
+            country: brand.country,
+            country_ar: brand.country_ar,
+            featured: brand.featured || false
+          };
+          this.createBrand(brandObj);
+        });
+      }
+      
+      // Import categories
+      if (productsData.categories && Array.isArray(productsData.categories)) {
+        productsData.categories.forEach((category: any) => {
+          const categoryObj: InsertCategory = {
+            name: category.name,
+            name_ar: category.name_ar,
+            description: category.description,
+            description_ar: category.description_ar,
+            imageUrl: category.imageUrl,
+            parentId: category.parentId
+          };
+          this.createCategory(categoryObj);
+        });
+      }
+      
+      // Import products
+      if (productsData.products && Array.isArray(productsData.products)) {
+        productsData.products.forEach((product: any) => {
+          const productObj: InsertProduct = {
+            name: product.name,
+            name_ar: product.name_ar,
+            description: product.description,
+            description_ar: product.description_ar,
+            price: product.price.toString(),
+            oldPrice: product.oldPrice ? product.oldPrice.toString() : null,
+            imageUrl: product.imageUrl,
+            categoryId: product.categoryId,
+            brandId: product.brandId,
+            stock: product.stock,
+            weight: product.weight,
+            isNew: product.isNew || false,
+            isFeatured: product.isFeatured || false,
+            tags: product.tags || [],
+            nutritionFacts: product.nutritionFacts || {},
+            ingredients: product.ingredients || null,
+            ingredients_ar: product.ingredients_ar || null
+          };
+          this.createProduct(productObj);
+        });
+      }
+    } catch (error) {
+      console.error('Error loading product data:', error);
+    }
+    
     // Sample events
     const sampleEvents: InsertEvent[] = [
       {
@@ -248,7 +388,130 @@ export class MemStorage implements IStorage {
     this.contactMessages.set(id, newMessage);
     return newMessage;
   }
+  
+  // Commerce methods
+  // Product methods
+  async getProducts(): Promise<Product[]> {
+    return Array.from(this.products.values());
+  }
+  
+  async getProduct(id: number): Promise<Product | undefined> {
+    return this.products.get(id);
+  }
+  
+  async getFeaturedProducts(): Promise<Product[]> {
+    return Array.from(this.products.values())
+      .filter(product => product.isFeatured);
+  }
+  
+  async getNewProducts(): Promise<Product[]> {
+    return Array.from(this.products.values())
+      .filter(product => product.isNew);
+  }
+  
+  async getProductsByCategory(categoryId: number): Promise<Product[]> {
+    return Array.from(this.products.values())
+      .filter(product => product.categoryId === categoryId);
+  }
+  
+  async getProductsByBrand(brandId: number): Promise<Product[]> {
+    return Array.from(this.products.values())
+      .filter(product => product.brandId === brandId);
+  }
+  
+  async createProduct(product: InsertProduct): Promise<Product> {
+    const id = this.currentProductId++;
+    const created_at = new Date();
+    const newProduct: Product = { ...product, id, created_at };
+    this.products.set(id, newProduct);
+    return newProduct;
+  }
+  
+  // Category methods
+  async getCategories(): Promise<Category[]> {
+    return Array.from(this.categories.values());
+  }
+  
+  async getCategory(id: number): Promise<Category | undefined> {
+    return this.categories.get(id);
+  }
+  
+  async createCategory(category: InsertCategory): Promise<Category> {
+    const id = this.currentCategoryId++;
+    const created_at = new Date();
+    const newCategory: Category = { ...category, id, created_at };
+    this.categories.set(id, newCategory);
+    return newCategory;
+  }
+  
+  // Brand methods
+  async getBrands(): Promise<Brand[]> {
+    return Array.from(this.brands.values());
+  }
+  
+  async getFeaturedBrands(): Promise<Brand[]> {
+    return Array.from(this.brands.values())
+      .filter(brand => brand.featured);
+  }
+  
+  async getBrand(id: number): Promise<Brand | undefined> {
+    return this.brands.get(id);
+  }
+  
+  async createBrand(brand: InsertBrand): Promise<Brand> {
+    const id = this.currentBrandId++;
+    const created_at = new Date();
+    const newBrand: Brand = { ...brand, id, created_at };
+    this.brands.set(id, newBrand);
+    return newBrand;
+  }
+  
+  // Review methods
+  async getReviews(productId: number): Promise<Review[]> {
+    return Array.from(this.reviews.values())
+      .filter(review => review.productId === productId);
+  }
+  
+  async createReview(review: InsertReview): Promise<Review> {
+    const id = this.currentReviewId++;
+    const created_at = new Date();
+    const newReview: Review = { ...review, id, created_at };
+    this.reviews.set(id, newReview);
+    return newReview;
+  }
+  
+  // Order methods
+  async getOrders(userId: number): Promise<Order[]> {
+    return Array.from(this.orders.values())
+      .filter(order => order.userId === userId);
+  }
+  
+  async getOrder(id: number): Promise<Order | undefined> {
+    return this.orders.get(id);
+  }
+  
+  async createOrder(order: InsertOrder): Promise<Order> {
+    const id = this.currentOrderId++;
+    const created_at = new Date();
+    const newOrder: Order = { ...order, id, created_at };
+    this.orders.set(id, newOrder);
+    return newOrder;
+  }
+  
+  // Order Item methods
+  async getOrderItems(orderId: number): Promise<OrderItem[]> {
+    return Array.from(this.orderItems.values())
+      .filter(item => item.orderId === orderId);
+  }
+  
+  async createOrderItem(orderItem: InsertOrderItem): Promise<OrderItem> {
+    const id = this.currentOrderItemId++;
+    const created_at = new Date();
+    const newOrderItem: OrderItem = { ...orderItem, id, created_at };
+    this.orderItems.set(id, newOrderItem);
+    return newOrderItem;
+  }
 }
 
-// Initialize storage with PostgreSQL implementation
-export const storage = new PgStorage();
+// Initialize storage with MemStorage implementation
+export const storage = new MemStorage();
