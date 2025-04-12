@@ -286,23 +286,23 @@ export class MemStorage implements IStorage {
     // Add news to store
     sampleNews.forEach(news => this.createNewsItem(news));
     
-    // Sample prayer times for today
+    // Updated prayer times from IslamicFinder for Kuopio, Finland
     const today = new Date();
     const prayerTime: InsertPrayerTime = {
       date: today.toISOString().split('T')[0],
-      fajr_begins: "03:14",
-      fajr_iqamah: "03:45",
-      sunrise: "04:30",
-      dhuhr_begins: "13:15",
-      dhuhr_iqamah: "13:30",
-      asr_begins: "17:45",
-      asr_iqamah: "18:00",
-      maghrib_begins: "22:10",
-      maghrib_iqamah: "22:20",
-      isha_begins: "23:45",
-      isha_iqamah: "00:00",
-      jummah_khutbah: "13:15",
-      jummah_iqamah: "13:30",
+      fajr_begins: "03:06",
+      fajr_iqamah: "03:36",
+      sunrise: "05:38",
+      dhuhr_begins: "12:51",
+      dhuhr_iqamah: "13:15",
+      asr_begins: "16:55",
+      asr_iqamah: "17:15",
+      maghrib_begins: "20:05",
+      maghrib_iqamah: "20:15",
+      isha_begins: "22:37",
+      isha_iqamah: "22:45",
+      jummah_khutbah: "12:45",
+      jummah_iqamah: "13:15",
     };
     
     this.createPrayerTime(prayerTime);

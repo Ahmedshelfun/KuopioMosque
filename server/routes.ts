@@ -21,12 +21,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.json({
           date: new Date(),
           prayers: [
-            { name: "Fajr", begins: "03:14", iqamah: "03:45" },
-            { name: "Sunrise", begins: "04:30", iqamah: null },
-            { name: "Dhuhr", begins: "13:15", iqamah: "13:30" },
-            { name: "Asr", begins: "17:45", iqamah: "18:00" },
-            { name: "Maghrib", begins: "22:10", iqamah: "22:20" },
-            { name: "Isha", begins: "23:45", iqamah: "00:00" },
+            { name: "Fajr", begins: "03:06", iqamah: "03:36" },
+            { name: "Sunrise", begins: "05:38", iqamah: null },
+            { name: "Dhuhr", begins: "12:51", iqamah: "13:15" },
+            { name: "Asr", begins: "16:55", iqamah: "17:15" },
+            { name: "Maghrib", begins: "20:05", iqamah: "20:15" },
+            { name: "Isha", begins: "22:37", iqamah: "22:45" },
           ],
           nextPrayer: {
             name: "Fajr",
@@ -80,12 +80,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.json({
           date: dateObj,
           prayers: [
-            { name: "Fajr", begins: "03:14", iqamah: "03:45" },
-            { name: "Sunrise", begins: "04:30", iqamah: null },
-            { name: "Dhuhr", begins: "13:15", iqamah: "13:30" },
-            { name: "Asr", begins: "17:45", iqamah: "18:00" },
-            { name: "Maghrib", begins: "22:10", iqamah: "22:20" },
-            { name: "Isha", begins: "23:45", iqamah: "00:00" },
+            { name: "Fajr", begins: "03:06", iqamah: "03:36" },
+            { name: "Sunrise", begins: "05:38", iqamah: null },
+            { name: "Dhuhr", begins: "12:51", iqamah: "13:15" },
+            { name: "Asr", begins: "16:55", iqamah: "17:15" },
+            { name: "Maghrib", begins: "20:05", iqamah: "20:15" },
+            { name: "Isha", begins: "22:37", iqamah: "22:45" },
           ],
           nextPrayer: {
             name: "Fajr",
