@@ -1,0 +1,45 @@
+[vite] connecting...
+[vite] connected.
+Warning: validateDOMNesting(...): <a> cannot appear as a descendant of &lt;a&gt;.
+    at a
+    at a
+    at https://4eabf9fb-e6cd-4715-a822-5ccb3fa24e09-00-1adtt3srqqc4e.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=b03ee8ba:352:18
+    at div
+    at div
+    at MotionComponent (https://4eabf9fb-e6cd-4715-a822-5ccb3fa24e09-00-1adtt3srqqc4e.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/framer-motion.js?v=b03ee8ba:945:40)
+    at div
+    at div
+    at div
+    at HeroSection (https://4eabf9fb-e6cd-4715-a822-5ccb3fa24e09-00-1adtt3srqqc4e.worf.replit.dev/src/components/Home/HeroSection.tsx:26:27)
+    at div
+    at HomePage (https://4eabf9fb-e6cd-4715-a822-5ccb3fa24e09-00-1adtt3srqqc4e.worf.replit.dev/src/pages/HomePage.tsx:26:41)
+    at Route (https://4eabf9fb-e6cd-4715-a822-5ccb3fa24e09-00-1adtt3srqqc4e.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=b03ee8ba:338:16)
+    at Switch (https://4eabf9fb-e6cd-4715-a822-5ccb3fa24e09-00-1adtt3srqqc4e.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=b03ee8ba:394:17)
+    at main
+    at div
+    at LanguageProvider (https://4eabf9fb-e6cd-4715-a822-5ccb3fa24e09-00-1adtt3srqqc4e.worf.replit.dev/src/hooks/useLanguage.tsx:25:36)
+    at App (https://4eabf9fb-e6cd-4715-a822-5ccb3fa24e09-00-1adtt3srqqc4e.worf.replit.dev/src/App.tsx?v=ouDSMmcpfTl2emcZC-6Vh:28:37)
+    at QueryClientProvider (https://4eabf9fb-e6cd-4715-a822-5ccb3fa24e09-00-1adtt3srqqc4e.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@tanstack_react-query.js?v=b03ee8ba:2879:3)
+at a
+at a
+at https://4eabf9fb-e6cd-4715-a822-5ccb3fa24e09-00-1adtt3srqqc4e.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=b03ee8ba:352:18
+at div
+at div
+at MotionComponent (https://4eabf9fb-e6cd-4715-a822-5ccb3fa24e09-00-1adtt3srqqc4e.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/framer-motion.js?v=b03ee8ba:945:40)
+at div
+at div
+at div
+at HeroSection (https://4eabf9fb-e6cd-4715-a822-5ccb3fa24e09-00-1adtt3srqqc4e.worf.replit.dev/src/components/Home/HeroSection.tsx:26:27)
+at div
+at HomePage (https://4eabf9fb-e6cd-4715-a822-5ccb3fa24e09-00-1adtt3srqqc4e.worf.replit.dev/src/pages/HomePage.tsx:26:41)
+at Route (https://4eabf9fb-e6cd-4715-a822-5ccb3fa24e09-00-1adtt3srqqc4e.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=b03ee8ba:338:16)
+at Switch (https://4eabf9fb-e6cd-4715-a822-5ccb3fa24e09-00-1adtt3srqqc4e.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=b03ee8ba:394:17)
+at main
+at div
+at LanguageProvider (https://4eabf9fb-e6cd-4715-a822-5ccb3fa24e09-00-1adtt3srqqc4e.worf.replit.dev/src/hooks/useLanguage.tsx:25:36)
+at App (https://4eabf9fb-e6cd-4715-a822-5ccb3fa24e09-00-1adtt3srqqc4e.worf.replit.dev/src/App.tsx?v=ouDSMmcpfTl2emcZC-6Vh:28:37)
+at QueryClientProvider (https://4eabf9fb-e6cd-4715-a822-5ccb3fa24e09-00-1adtt3srqqc4e.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@tanstack_react-query.js?v=b03ee8ba:2879:3)
+at t.value (https://4eabf9fb-e6cd-4715-a822-5ccb3fa24e09-00-1adtt3srqqc4e.worf.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
+at new t (https://4eabf9fb-e6cd-4715-a822-5ccb3fa24e09-00-1adtt3srqqc4e.worf.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630)
+at t.value (https://4eabf9fb-e6cd-4715-a822-5ccb3fa24e09-00-1adtt3srqqc4e.worf.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766)
+at https://4eabf9fb-e6cd-4715-a822-5ccb3fa24e09-00-1adtt3srqqc4e.worf.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:34400

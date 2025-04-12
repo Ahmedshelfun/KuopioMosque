@@ -73,10 +73,8 @@ export default function NewsSection({ news, isLoading }: NewsSectionProps) {
                     <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
                       {newsItem.content}
                     </p>
-                    <Link href={`/news/${newsItem.id}`}>
-                      <a className="text-primary font-medium text-sm hover:underline">
-                        {language === 'ar' ? 'قراءة المزيد' : 'Read More'}
-                      </a>
+                    <Link href={`/news/${newsItem.id}`} className="text-primary font-medium text-sm hover:underline">
+                      {language === 'ar' ? 'قراءة المزيد' : 'Read More'}
                     </Link>
                   </div>
                 </motion.div>
@@ -95,11 +93,9 @@ export default function NewsSection({ news, isLoading }: NewsSectionProps) {
             
             <div className="text-center">
               <Link href="/news">
-                <a>
-                  <Button variant="outline">
-                    {language === 'ar' ? 'عرض جميع الأخبار' : 'View All News'}
-                  </Button>
-                </a>
+                <Button variant="outline">
+                  {language === 'ar' ? 'عرض جميع الأخبار' : 'View All News'}
+                </Button>
               </Link>
             </div>
           </div>

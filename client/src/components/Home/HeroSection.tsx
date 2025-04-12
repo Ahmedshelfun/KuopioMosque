@@ -30,18 +30,14 @@ export default function HeroSection() {
             </p>
             <div className="flex flex-wrap gap-4">
               <Link href="/prayer-times">
-                <a>
-                  <Button size="lg">
-                    {language === 'ar' ? 'أوقات الصلاة' : 'Prayer Times'}
-                  </Button>
-                </a>
+                <Button size="lg">
+                  {language === 'ar' ? 'أوقات الصلاة' : 'Prayer Times'}
+                </Button>
               </Link>
               <Link href="/events">
-                <a>
-                  <Button variant="outline" size="lg">
-                    {language === 'ar' ? 'الفعاليات القادمة' : 'Upcoming Events'}
-                  </Button>
-                </a>
+                <Button variant="outline" size="lg">
+                  {language === 'ar' ? 'الفعاليات القادمة' : 'Upcoming Events'}
+                </Button>
               </Link>
             </div>
           </motion.div>

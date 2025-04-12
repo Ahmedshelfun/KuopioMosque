@@ -76,27 +76,25 @@ export default function EventsSection({
                       </div>
                       <div className="flex items-center">
                         <Clock className="h-5 w-5 text-primary me-2" />
-                        <span>{featuredEvent.time_range}</span>
+                        <span>{featuredEvent.timeRange}</span>
                       </div>
                       <div className="flex items-center">
                         <MapPin className="h-5 w-5 text-primary me-2" />
-                        <span>{featuredEvent.location}</span>
+                        <span>{featuredEvent.type}</span>
                       </div>
                     </div>
                     <div className="mt-auto">
                       <Link href={`/events/${featuredEvent.id}`}>
-                        <a>
-                          <Button>
-                            {language === 'ar' ? 'المزيد من التفاصيل' : 'More Details'}
-                          </Button>
-                        </a>
+                        <Button>
+                          {language === 'ar' ? 'المزيد من التفاصيل' : 'More Details'}
+                        </Button>
                       </Link>
                     </div>
                   </div>
-                  {featuredEvent.image_url && (
+                  {featuredEvent.imageUrl && (
                     <div className="h-full w-full">
                       <img
-                        src={featuredEvent.image_url}
+                        src={featuredEvent.imageUrl}
                         alt={featuredEvent.title}
                         className="w-full h-full object-cover"
                       />
@@ -124,10 +122,10 @@ export default function EventsSection({
                   className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-lg shadow-sm overflow-hidden"
                   variants={fadeIn}
                 >
-                  {event.image_url && (
+                  {event.imageUrl && (
                     <div className="h-40 overflow-hidden">
                       <img
-                        src={event.image_url}
+                        src={event.imageUrl}
                         alt={event.title}
                         className="w-full h-full object-cover"
                       />
@@ -147,17 +145,15 @@ export default function EventsSection({
                       </div>
                       <div className="flex items-center">
                         <Clock className="h-4 w-4 text-gray-500 me-2" />
-                        <span>{event.time_range}</span>
+                        <span>{event.timeRange}</span>
                       </div>
                       <div className="flex items-center">
                         <MapPin className="h-4 w-4 text-gray-500 me-2" />
-                        <span>{event.location}</span>
+                        <span>{event.type}</span>
                       </div>
                     </div>
-                    <Link href={`/events/${event.id}`}>
-                      <a className="text-primary font-medium text-sm hover:underline">
-                        {language === 'ar' ? 'المزيد من التفاصيل' : 'More Details'}
-                      </a>
+                    <Link href={`/events/${event.id}`} className="text-primary font-medium text-sm hover:underline">
+                      {language === 'ar' ? 'المزيد من التفاصيل' : 'More Details'}
                     </Link>
                   </div>
                 </motion.div>
@@ -176,11 +172,9 @@ export default function EventsSection({
             
             <div className="text-center">
               <Link href="/events">
-                <a>
-                  <Button variant="outline">
-                    {language === 'ar' ? 'عرض جميع الفعاليات' : 'View All Events'}
-                  </Button>
-                </a>
+                <Button variant="outline">
+                  {language === 'ar' ? 'عرض جميع الفعاليات' : 'View All Events'}
+                </Button>
               </Link>
             </div>
           </div>
